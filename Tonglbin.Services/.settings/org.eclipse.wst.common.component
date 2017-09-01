@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Tonglbin.Services">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="Tonglbin.Business.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Tonglbin.Business/Tonglbin.Business">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Tonglbin.ObjectModel.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Tonglbin.ObjectModel/Tonglbin.ObjectModel">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Tonglbin.DataAccess.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Tonglbin.DataAccess/Tonglbin.DataAccess">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="Tonglbin.Services"/>
+        <property name="java-output-path" value="/Tonglbin.Services/build/classes"/>
+    </wb-module>
+</project-modules>
