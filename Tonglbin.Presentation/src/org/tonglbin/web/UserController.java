@@ -14,13 +14,12 @@ import org.apache.axis2.AxisFault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.tonglbin.commontools.JsonUtil;
 import org.tonglbin.entity.xsd.User;
-import org.tonglbin.services.user.GetUser;
-import org.tonglbin.services.user.UserServicesImpl;
-import org.tonglbin.services.user.UserServicesImplStub;
+import org.tonglbin.services.user.*;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping(value="/user")
 public class UserController {
 
 	@RequestMapping("/getAllUser")
@@ -29,16 +28,17 @@ public class UserController {
 		return "/index";
 	}
 
+	@ResponseBody
 	@RequestMapping("/getUserById")
-	public @ResponseBody String getUserById(String id) throws Exception {
+	public String getUserById(String id) throws Exception {
 
 		UserServicesImplStub userServStub = new UserServicesImplStub();
 		GetUser getUser = new GetUser();
 		getUser.setId(id);
 		User user = new User();
 		user = userServStub.getUser(getUser).get_return();
-
-		return "Id:" + user.getId() + ",Name:" + user.getUserName() + ",Age:" + user.getAge();
+		String oRes = JsonUtil.objectToJsonStr(user);
+		return oRes;
 	}
 
 }

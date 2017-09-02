@@ -26,6 +26,6 @@ $(function(){
 </script>
 </head>
 <body>
-AAA，<div id="divTest"></div>
+AAA，中文：<div id="divTest"></div>
 </body>
 </html>
