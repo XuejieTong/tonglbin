@@ -1,7 +1,7 @@
 package org.tonglbin.business.user;
 
-import org.tonglbin.entity.User;
+import org.tonglbin.entity.TbUser;
 
 public interface IUserBusiness {
-	public User getUser(String id);
+	public TbUser getUser(int id);
 }

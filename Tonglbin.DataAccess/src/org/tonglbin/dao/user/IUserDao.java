@@ -1,16 +1,16 @@
 package org.tonglbin.dao.user;
 
 import java.util.List;
-import org.tonglbin.entity.User;
+import org.tonglbin.entity.TbUser;
 
 public interface IUserDao {
-	public User getUser(String id);
+	public TbUser getUser(int id);
 	
-	public List<User> getAllUser();
+	public List<TbUser> getAllUser();
 	
-	public void addUser(User user);
+	public void addUser(TbUser user);
 	
 	public boolean delUser(String id);
 	
-	public boolean updateUser(User user);
+	public boolean updateUser(TbUser user);
 }

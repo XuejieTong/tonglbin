@@ -11,7 +11,7 @@
 $(function(){
     $.ajax({
         type: "post",
-        url: "getUserById?id=297ec4525d602974015d602ac0480001",
+        url: "getUserById?id=1",
         beforeSend: function () {
 
         },

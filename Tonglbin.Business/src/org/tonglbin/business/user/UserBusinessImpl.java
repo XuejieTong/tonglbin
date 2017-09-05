@@ -1,18 +1,17 @@
 package org.tonglbin.business.user;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.tonglbin.business.utilities.BaseBusiness;
 import org.tonglbin.dao.user.UserDaoImpl;
-import org.tonglbin.entity.User;
+import org.tonglbin.entity.TbUser;
 
-public class UserBusinessImpl implements IUserBusiness {
+public class UserBusinessImpl extends BaseBusiness implements IUserBusiness {
 
 	@Override
-	public User getUser(String id) {
+	public TbUser getUser(int id) {
 		
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("org/tonglbin/config/spring/applicationContext.xml");	
 		// 配置文件中的id属性
 		UserDaoImpl userDao = (UserDaoImpl) context.getBean("userDao");
-		User user = userDao.getUser(id);
+		TbUser user = userDao.getUser(id);
 		context.close();
 
 		return user;

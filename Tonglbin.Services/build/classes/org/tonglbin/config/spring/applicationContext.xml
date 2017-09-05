@@ -16,15 +16,17 @@
 
 	<context:component-scan base-package="org.tonglbin"></context:component-scan>
 	<!-- 配置数据源 -->
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://localhost:3306/test_ssh"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/tonglbindb"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="123456"></property>
 	</bean>
-	
+
 	<!-- 配置SessionFactory -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<props>
@@ -37,32 +39,40 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>org.tonglbin.entity.User</value>
+				<value>org.tonglbin.entity.TbUser</value>
+				<value>org.tonglbin.entity.TbRole</value>
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- 配置一个事务管理器 -->
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
+
 	<!-- 配置事务，使用代理的方式 -->
-	<bean id="transactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">  
-	    <property name="transactionManager" ref="transactionManager"></property>  
-	    <property name="transactionAttributes">  
-	        <props>  
-	            <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>  
-	            <prop key="modify*">PROPAGATION_REQUIRED,-myException</prop>  
-	            <prop key="del*">PROPAGATION_REQUIRED</prop>  
-	            <prop key="*">PROPAGATION_REQUIRED</prop>  
-	        </props>  
-	    </property>  
-	</bean> 
+	<bean id="transactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager" ref="transactionManager"></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="modify*">PROPAGATION_REQUIRED,-myException</prop>
+				<prop key="del*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
 
 	<bean id="daoCommon" class="org.tonglbin.dao.utilities.DaoCommon">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="userDao" class="org.tonglbin.dao.user.UserDaoImpl">
-	<property name="sessionFactory" ref="sessionFactory"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="rolesDao" class="org.tonglbin.dao.role.RolesDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 </beans> 

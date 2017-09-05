@@ -406,7 +406,7 @@
         }
         return false;
     }
-     //http://localhost:8081/Tonglbin.Services/services/UserService?wsdl
+     //http://localhost:8080/axis2/services/UserServicesImpl
             private  org.apache.axiom.om.OMElement  toOM(org.tonglbin.services.user.GetUser param, boolean optimizeContent)
             throws org.apache.axis2.AxisFault {
 

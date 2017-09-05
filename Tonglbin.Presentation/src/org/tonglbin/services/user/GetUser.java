@@ -30,25 +30,14 @@
                         */
 
                         
-                                    protected java.lang.String localId ;
+                                    protected int localId ;
                                 
-                           /*  This tracker boolean wil be used to detect whether the user called the set method
-                          *   for this attribute. It will be used to determine whether to include this field
-                           *   in the serialized XML
-                           */
-                           protected boolean localIdTracker = false ;
-
-                           public boolean isIdSpecified(){
-                               return localIdTracker;
-                           }
-
-                           
 
                            /**
                            * Auto generated getter method
-                           * @return java.lang.String
+                           * @return int
                            */
-                           public  java.lang.String getId(){
+                           public  int getId(){
                                return localId;
                            }
 
@@ -58,9 +47,8 @@
                                * Auto generated setter method
                                * @param param Id
                                */
-                               public void setId(java.lang.String param){
-                            localIdTracker = true;
-                                   
+                               public void setId(int param){
+                            
                                             this.localId=param;
                                        
 
@@ -123,25 +111,20 @@
 
                
                    }
-                if (localIdTracker){
+               
                                     namespace = "http://user.services.tonglbin.org";
                                     writeStartElement(null, namespace, "id", xmlWriter);
                              
-
-                                          if (localId==null){
-                                              // write the nil attribute
-                                              
-                                                     writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","nil","1",xmlWriter);
-                                                  
-                                          }else{
-
-                                        
-                                                   xmlWriter.writeCharacters(localId);
-                                            
-                                          }
+                                               if (localId==java.lang.Integer.MIN_VALUE) {
+                                           
+                                                         throw new org.apache.axis2.databinding.ADBException("id cannot be null!!");
+                                                      
+                                               } else {
+                                                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localId));
+                                               }
                                     
                                    xmlWriter.writeEndElement();
-                             }
+                             
                     xmlWriter.writeEndElement();
                
 
@@ -391,29 +374,26 @@
                                 
                                     if (reader.isStartElement() && new javax.xml.namespace.QName("http://user.services.tonglbin.org","id").equals(reader.getName()) || new javax.xml.namespace.QName("","id").equals(reader.getName()) ){
                                 
-                                       nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
-                                       if (!"true".equals(nillableValue) && !"1".equals(nillableValue)){
+                                    nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
+                                    if ("true".equals(nillableValue) || "1".equals(nillableValue)){
+                                        throw new org.apache.axis2.databinding.ADBException("The element: "+"id" +"  cannot be null");
+                                    }
                                     
 
                                     java.lang.String content = reader.getElementText();
                                     
                                               object.setId(
-                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToString(content));
-                                            
-                                       } else {
-                                           
-                                           
-                                           reader.getElementText(); // throw away text nodes if any.
-                                       }
-                                      
+                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToInt(content));
+                                              
                                         reader.next();
                                     
                               }  // End of if for expected property start element
                                 
-                                    else {
-                                        
-                                    }
-                                  
+                                else{
+                                    // 1 - A start element we are not expecting indicates an invalid parameter was passed
+                                    throw new org.apache.axis2.databinding.ADBException("Unexpected subelement " + reader.getName());
+                                }
+                              
                             while (!reader.isStartElement() && !reader.isEndElement())
                                 reader.next();
                             

@@ -30,7 +30,7 @@
                         */
 
                         
-                                    protected org.tonglbin.entity.xsd.User local_return ;
+                                    protected org.tonglbin.entity.xsd.TbUser local_return ;
                                 
                            /*  This tracker boolean wil be used to detect whether the user called the set method
                           *   for this attribute. It will be used to determine whether to include this field
@@ -46,9 +46,9 @@
 
                            /**
                            * Auto generated getter method
-                           * @return org.tonglbin.entity.xsd.User
+                           * @return org.tonglbin.entity.xsd.TbUser
                            */
-                           public  org.tonglbin.entity.xsd.User get_return(){
+                           public  org.tonglbin.entity.xsd.TbUser get_return(){
                                return local_return;
                            }
 
@@ -58,7 +58,7 @@
                                * Auto generated setter method
                                * @param param _return
                                */
-                               public void set_return(org.tonglbin.entity.xsd.User param){
+                               public void set_return(org.tonglbin.entity.xsd.TbUser param){
                             local_returnTracker = true;
                                    
                                             this.local_return=param;
@@ -394,7 +394,7 @@
                                           
                                       }else{
                                     
-                                                object.set_return(org.tonglbin.entity.xsd.User.Factory.parse(reader));
+                                                object.set_return(org.tonglbin.entity.xsd.TbUser.Factory.parse(reader));
                                               
                                         reader.next();
                                     }

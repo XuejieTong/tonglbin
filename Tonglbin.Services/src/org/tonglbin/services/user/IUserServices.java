@@ -1,7 +1,7 @@
 package org.tonglbin.services.user;
 
-import org.tonglbin.entity.User;
+import org.tonglbin.entity.TbUser;
 
 public interface IUserServices {
-	public User getUser(String id);
+	public TbUser getUser(int id);
 }

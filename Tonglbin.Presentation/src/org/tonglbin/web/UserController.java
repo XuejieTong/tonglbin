@@ -15,11 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tonglbin.commontools.JsonUtil;
-import org.tonglbin.entity.xsd.User;
+import org.tonglbin.entity.xsd.TbUser;
 import org.tonglbin.services.user.*;
 
 @Controller
-@RequestMapping(value="/user")
+@RequestMapping(value = "/user")
 public class UserController {
 
 	@RequestMapping("/getAllUser")
@@ -30,14 +30,18 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping("/getUserById")
-	public String getUserById(String id) throws Exception {
+	public String getUserById(int id) throws Exception {
 
+		String oRes =  "Î´·µ»ØÊý¾Ý";
 		UserServicesImplStub userServStub = new UserServicesImplStub();
 		GetUser getUser = new GetUser();
 		getUser.setId(id);
-		User user = new User();
+		TbUser user = new TbUser();
 		user = userServStub.getUser(getUser).get_return();
-		String oRes = JsonUtil.objectToJsonStr(user);
+		if(user!=null) {
+			 oRes = user.getUsername();//JsonUtil.objectToJsonStr(user);
+		}
+
 		return oRes;
 	}
 

@@ -23,9 +23,9 @@
               
                   if (
                   "http://entity.tonglbin.org/xsd".equals(namespaceURI) &&
-                  "User".equals(typeName)){
+                  "TbUser".equals(typeName)){
                    
-                            return  org.tonglbin.entity.xsd.User.Factory.parse(reader);
+                            return  org.tonglbin.entity.xsd.TbUser.Factory.parse(reader);
                         
 
                   }

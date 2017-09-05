@@ -2,27 +2,30 @@ package org.tonglbin.dao.user;
 
 import java.util.List;
 import org.hibernate.Query;
-import org.tonglbin.entity.User;
+import org.tonglbin.entity.TbUser;
 import org.tonglbin.dao.utilities.DaoCommon;
 
 public class UserDaoImpl extends DaoCommon implements IUserDao {
-	
+
 	@Override
-	public User getUser(String id) {
-		String hql = "from User u where u.id=?";
-		Query query = sessionFactory.openSession().createQuery(hql);
-		query.setString(0, id);
-		return (User) query.uniqueResult();
+	public TbUser getUser(int id) {
+		TbUser user = null;
+		String hql = "from TbUser u where u.userid=?";
+		Object obj = sessionFactory.openSession().createQuery(hql).setInteger(0, id).uniqueResult();
+		if (obj != null) {
+			user = (TbUser) obj;
+		}
+		return user;
 	}
 
 	@Override
-	public List<User> getAllUser() {
+	public List<TbUser> getAllUser() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addUser(User user) {
+	public void addUser(TbUser user) {
 		// TODO Auto-generated method stub
 
 	}
@@ -34,7 +37,7 @@ public class UserDaoImpl extends DaoCommon implements IUserDao {
 	}
 
 	@Override
-	public boolean updateUser(User user) {
+	public boolean updateUser(TbUser user) {
 		// TODO Auto-generated method stub
 		return false;
 	}
