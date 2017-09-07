@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"  
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.2.xsd
 	http://www.springframework.org/schema/mvc
-	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+	http://www.springframework.org/schema/util 
+	http://www.springframework.org/schema/util/spring-util-4.1.xsd">
 
 	<!-- 注解扫描包 -->
 	<context:component-scan base-package="org.tonglbin" />
@@ -29,5 +33,58 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/"></property>
 		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- 用于配置Redis -->
+	<util:map id="redisConfig">
+		<entry key="host" value="localhost" />
+		<entry key="port" value="6379" />
+		<entry key="password" value="" />
+		<entry key="timeout" value="1500" />
+	</util:map>
+
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="1500" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testOnReturn" value="true" />
+	</bean>
+
+	<bean id="connectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="poolConfig" ref="jedisPoolConfig" />
+		<property name="hostName" value="#{redisConfig.host}" />
+		<property name="port" value="#{redisConfig.port}" />
+		<property name="password" value="#{redisConfig.password}" />
+		<property name="timeout" value="#{redisConfig.timeout}" />
+	</bean>
+
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+	</bean>
+
+	<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool"
+		scope="singleton">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<constructor-arg index="1">
+			<list>
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg name="host" value="#{redisConfig.host}" />
+					<constructor-arg name="port" value="#{redisConfig.port}" />
+					<constructor-arg name="timeout" value="#{redisConfig.timeout}" />
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool" scope="singleton">
+		<constructor-arg ref="jedisPoolConfig" />
+		<constructor-arg value="#{redisConfig.host}" />
+		<constructor-arg value="#{redisConfig.port}" type="int" />
+		<constructor-arg name="timeout" value="#{redisConfig.timeout}" type="int" />
+	</bean>
+
+	<bean class="org.tonglbin.redis.JRedis" lazy-init="false">
+		<property name="shardedJedisPool" ref="shardedJedisPool" />
+		<property name="jedisPool" ref="jedisPool" />
 	</bean>
 </beans>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tonglbin.commontools.JsonUtil;
 import org.tonglbin.entity.xsd.TbUser;
+import org.tonglbin.redis.JRedis;
 import org.tonglbin.services.user.*;
 
 @Controller
@@ -28,6 +29,8 @@ public class UserController {
 	@RequestMapping("/getAllUser")
 	public String getAllUser(HttpServletRequest request) throws Exception {
 
+		JRedis.set("testKey", "testValue");
+	
 		logger.info("info ");
 		logger.error("error");
 		logger.warn("warn");
@@ -49,8 +52,8 @@ public class UserController {
 		if(user!=null) {
 			 oRes = user.getUsername();//JsonUtil.objectToJsonStr(user);
 		}
-
-		return oRes;
+		
+		return oRes+"RedisCache:"+JRedis.get("testKey");
 	}
 
 }
