@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.axis2.AxisFault;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,9 +23,16 @@ import org.tonglbin.services.user.*;
 @RequestMapping(value = "/user")
 public class UserController {
 
+	private static Logger logger = Logger.getLogger(UserController.class);
+	
 	@RequestMapping("/getAllUser")
 	public String getAllUser(HttpServletRequest request) throws Exception {
 
+		logger.info("info ");
+		logger.error("error");
+		logger.warn("warn");
+		logger.debug("debug");
+		logger.fatal("fatal");
 		return "/index";
 	}
 
